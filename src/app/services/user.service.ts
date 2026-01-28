@@ -28,4 +28,20 @@ export const userService = {
       return {data: null, error: error}
     }
   },
+
+  logout: async function () {
+    try {
+      const cookieStore = await cookies();
+      await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/logout`, {
+        method: "POST",
+        headers: {
+          cookie: cookieStore.toString(),
+        },
+        cache: "no-store",
+        credentials: "include"
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

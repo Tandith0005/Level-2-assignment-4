@@ -1,10 +1,15 @@
-import { NavLinks, userNavLinks } from "@/app/constants";
-import { CircleUserRound } from "lucide-react";
+import { NavLinks } from "@/app/constants";
+import { userService } from "@/app/services/user.service";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { UserDropdown } from "./UserDropdown";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const {data} = await userService.getSession();
+  const user = data?.user || null;
+
   return (
     <div className="navbar bg-base-100/30 backdrop-blur-lg border-b border-base-content/10 fixed top-0 z-50 w-full ">
       <div className="container mx-auto p-4 flex justify-between items-center">
@@ -64,26 +69,19 @@ const Navbar = () => {
           ))}
         </div>
         <div className="navbar-end">
-          <Link
-            href="/login"
-            className="btn bg-primary text-white border-none hover:bg-blue-600"
-          >
-            Login
-          </Link>
+          {/* no user :{ */}
+          {!user && (
+            <Link
+              href="/login"
+              className="btn bg-primary text-white border-none hover:bg-blue-600"
+            >
+              Login
+            </Link>
+          )}
 
           {/* User */}
-          <details className="dropdown ">
-            <summary className="btn m-1 bg-primary text-zinc-50">
-              <CircleUserRound />
-            </summary>
-            <ul className="menu dropdown-content bg-blue-400 text-zinc-50 rounded-box z-1 w-25 p-2 shadow-sm">
-              {userNavLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </details>
+          {user && <UserDropdown />}
+
         </div>
       </div>
     </div>

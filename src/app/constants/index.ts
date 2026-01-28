@@ -11,11 +11,6 @@ export const NavLinks: NavLinks[] = [
     { label: "Health Articles", href: "/blog" },
     { label: "Contact", href: "/contact" },
 ];
-export const userNavLinks: NavLinks[] = [
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Cart", href: "/dashboard/cart" },
-  { label: "Logout", href: "/logout" },
-]
 
 interface Steps {
   step: number;
