@@ -7,9 +7,8 @@ const Footer = () => {
     <footer className="bg-gray-100 text-gray-800">
       <div className="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        {/* About Section */}
-        <div>
-          <h2 className="text-xl font-bold mb-4">MediStore 💊</h2>
+        <div className="flex flex-col">
+          <h2 className="text-xl font-bold mb-4 mx-auto md:mx-0">MediStore 💊</h2>
           <p className="text-sm">
             Your trusted online pharmacy. Order medicines and health products 
             online, delivered safely to your doorstep.
@@ -17,8 +16,8 @@ const Footer = () => {
         </div>
 
         {/* Quick Links */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-primary">Quick Links</h3>
+        <div className="flex flex-col">
+          <h3 className="text-lg font-semibold mb-4 text-primary mx-auto md:mx-0">Quick Links</h3>
           <ul className="space-y-2 text-sm">
             {
                 QuickLinks.map((link) => (
@@ -32,9 +31,9 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Contact / Social */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-primary">Contact Us</h3>
+        {/* Contact Us */}
+        <div className="flex flex-col">
+          <h3 className="text-lg font-semibold mb-4 text-primary mx-auto md:mx-0">Contact Us</h3>
           <p className="text-sm mb-2">Email: support@medistore.com</p>
           <p className="text-sm mb-4">Phone: +880 123456789</p>
         </div>

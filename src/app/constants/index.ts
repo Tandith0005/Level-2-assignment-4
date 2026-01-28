@@ -11,6 +11,11 @@ export const NavLinks: NavLinks[] = [
     { label: "Health Articles", href: "/blog" },
     { label: "Contact", href: "/contact" },
 ];
+export const userNavLinks: NavLinks[] = [
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Cart", href: "/dashboard/cart" },
+  { label: "Logout", href: "/logout" },
+]
 
 interface Steps {
   step: number;
@@ -74,3 +79,25 @@ export const QuickLinks: QuickLinks[] = [
   { label: "Shop", href: "/shop" },
   { label: "Login", href: "/login" },
 ]
+
+
+export const categories = [
+  "All Medicines",
+  "Pain Relief",
+  "Antibiotics",
+  "Vitamins",
+  "Diabetes",
+];
+export const manufacturers = [
+  "All Manufacturers",
+  "Square",
+  "Beximco",
+  "Incepta",
+  "ACI",
+];
+export const priceRanges = [
+  { label: "All Prices", min: 0, max: Infinity },
+  { label: "Below ৳100", min: 0, max: 100 },
+  { label: "৳100 - ৳300", min: 100, max: 300 },
+  { label: "Above ৳300", min: 300, max: Infinity },
+];
