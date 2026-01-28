@@ -1,10 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { authClient } from "@/app/lib/auth-client";
+import { toast } from "react-toastify";
+import SocialSignIn from "@/components/layout/SocialSignIn";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const res = await authClient.signIn.email({
+      email,
+      password,
+      callbackURL: "/",
+    });
+
+    setLoading(false);
+    if (res.error) {
+      toast.error(`${res.error.message}. If you don't have an account please Register` );
+      return;
+    }
+
+    toast.success("Account created successfully");
+
+    setEmail("");
+    setPassword("");
+  };
+
   return (
     <div className="flex items-center justify-center p-4">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm border border-gray-200">
@@ -24,7 +54,7 @@ const Login = () => {
         </h2>
 
         {/* Form */}
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div>
             <label className="label">
               <span className="label-text text-gray-700">Email</span>
@@ -34,6 +64,8 @@ const Login = () => {
               name="email"
               placeholder="Enter your email"
               className="input input-bordered w-full"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -45,13 +77,18 @@ const Login = () => {
               type="password"
               placeholder="Enter your password"
               className="input input-bordered w-full"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <button type="submit" className="btn btn-primary mt-4 w-full">
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        {/* social login buttons */}
+        <SocialSignIn />
 
         {/* Register link */}
         <p className="text-center text-sm text-gray-500 mt-4">

@@ -1,19 +1,56 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { authClient } from "@/app/lib/auth-client";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    setLoading(true);
+
+    const res = await authClient.signUp.email({
+      email,
+      password,
+      name,
+      callbackURL: "/",
+    });
+
+    setLoading(false);
+
+    if (res.error) {
+      toast.error(res.error.message);
+      return;
+    }
+
+    toast.success("Account created successfully");
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
+
   return (
     <div className="flex items-center justify-center p-4">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-sm border border-gray-200">
-        {/* Logo */}
+      <div className="bg-white shadow-lg rounded-xl p-12 w-[full] border border-gray-200">
         <div className="flex justify-center mb-6">
           <Image
             src="/mediStore(1).png"
             alt="MediStore Logo"
-            className="object-contain"
             width={100}
             height={100}
           />
@@ -24,57 +61,53 @@ const Register = () => {
         </h2>
 
         {/* Form */}
-        <form className="flex flex-col gap-4">
-          <div>
-            <label className="label">
-              <span className="label-text text-gray-700">Full Name</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your full name"
-              className="input input-bordered w-full"
-            />
-          </div>
+        <form onSubmit={handleRegister} className="flex flex-col gap-4 pr-8 ">
+          <input
+            type="text"
+            placeholder="Full name"
+            className="input input-bordered w-[120%]"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-          <div>
-            <label className="label">
-              <span className="label-text text-gray-700">Email</span>
-            </label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="input input-bordered w-full"
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="input input-bordered w-[120%]"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-          <div>
-            <label className="label">
-              <span className="label-text text-gray-700">Password</span>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="input input-bordered w-full"
-            />
-          </div>
+          <input
+            type="password"
+            placeholder="Password"
+            className="input input-bordered w-[120%]"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-          <div>
-            <label className="label">
-              <span className="label-text text-gray-700">Confirm Password</span>
-            </label>
-            <input
-              type="password"
-              placeholder="Confirm your password"
-              className="input input-bordered w-full"
-            />
-          </div>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="input input-bordered w-[120%]"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
 
-          <button type="submit" className="btn btn-primary mt-4 w-full">
-            Register
+          <button
+            type="submit"
+            className="btn btn-primary w-[120%]"
+            disabled={loading}
+          >
+            {loading ? "Creating account..." : "Register"}
           </button>
         </form>
 
-        {/* Login link */}
         <p className="text-center text-sm text-gray-500 mt-4">
           Already have an account?{" "}
           <Link href="/login" className="text-blue-500 hover:underline">
