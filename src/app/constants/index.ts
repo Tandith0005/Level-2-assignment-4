@@ -7,8 +7,6 @@ export const NavLinks: NavLinks[] = [
   { label: "Home", href: "/" },
     { label: "Shop", href: "/shop" },
     { label: "Categories", href: "/categories" },
-    { label: "Prescriptions", href: "/prescriptions" },
-    { label: "Health Articles", href: "/blog" },
     { label: "Contact", href: "/contact" },
 ];
 
@@ -16,6 +14,26 @@ interface Steps {
   step: number;
   title: string;
   description: string;
+}
+
+export interface Medicine {
+  id: string;
+  name: string;
+  description?: string | null;
+  price: number;
+  image?: string | null;
+  category: string;
+  manufacturer: string;
+  sellerId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type UserRole = "ADMIN" | "SELLER" | "CUSTOMER";
+export interface User {
+  id: string;
+  email: string;
+  role: UserRole;
 }
 
 export const Steps: Steps[] = [
@@ -82,6 +100,7 @@ export const categories = [
   "Antibiotics",
   "Vitamins",
   "Diabetes",
+  "Others"
 ];
 export const manufacturers = [
   "All Manufacturers",
@@ -89,6 +108,7 @@ export const manufacturers = [
   "Beximco",
   "Incepta",
   "ACI",
+  "Others"
 ];
 export const priceRanges = [
   { label: "All Prices", min: 0, max: Infinity },

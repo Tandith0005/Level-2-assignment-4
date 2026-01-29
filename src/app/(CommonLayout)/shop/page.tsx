@@ -1,22 +1,13 @@
-import { categories, manufacturers, priceRanges } from "@/app/constants";
+import { categories, manufacturers, Medicine, priceRanges } from "@/app/constants";
+import { fetchMedicines } from "@/app/services/medicine.service";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Shop = () => {
-  const filteredProducts = [
-    {
-      id: 1,
-      name: "Paracetamol 500mg",
-      category: "Pain Relief",
-      manufacturer: "Square",
-      price: 120,
-      stock: true,
-      image: "/doctor.jpg",
-      description: "Effective pain relief and fever reducer.",
-    },
-  ];
+const Shop = async() => {
+  const medicines = await fetchMedicines();
+
 
   return (
     <div className="min-h-screen pt-28 pb-12 bg-gray-50">
@@ -72,14 +63,17 @@ const Shop = () => {
         lg:grid-cols-3
         xl:grid-cols-4"
       >
-        {filteredProducts.map((product) => (
+        {medicines.map((product : Medicine) => (
+ 
           <div
             key={product.id}
             className="card bg-base-100 shadow-md hover:shadow-xl transition duration-300"
           >
+            {/* Error: Failed to parse src "sfzfszdfzdf" on `next/image`, if using relative image it must start 
+            with a leading slash "/" or be an absolute URL (http:// or https://) */}
             <figure className="px-6 pt-6">
               <Image
-                src={product.image}
+                src={'/doctor.jpg' }
                 width={300}
                 height={300}
                 alt={product.name}
@@ -91,13 +85,7 @@ const Shop = () => {
             <div className="card-body">
               <h2 className="card-title flex justify-between items-start">
                 <span>{product.name}</span>
-                {product.stock ? (
-                  <span className="badge badge-success text-xs">In Stock</span>
-                ) : (
-                  <span className="badge badge-error text-xs">
-                    Out of Stock
-                  </span>
-                )}
+                
               </h2>
 
               {/* Category & Manufacturer */}

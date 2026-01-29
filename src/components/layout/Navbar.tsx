@@ -80,7 +80,7 @@ const Navbar = async () => {
           )}
 
           {/* User */}
-          {user && <UserDropdown />}
+          {user && <UserDropdown user={user} />}
 
         </div>
       </div>
