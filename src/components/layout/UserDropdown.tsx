@@ -14,14 +14,10 @@ export const UserDropdown = () => {
         credentials: "include", 
       });
 
-      if (response.ok) {
-        setTimeout(() => {
-          router.push("/"); 
-        }, 500);
         toast.success("Logged out successfully");
-      } else {
-        toast.error("Logout failed. Please try again.");
-      }
+
+      window.location.href = "/";
+      
     } catch (error) {
       console.error("Logout error:", error);
       toast.error("An error occurred during logout.");

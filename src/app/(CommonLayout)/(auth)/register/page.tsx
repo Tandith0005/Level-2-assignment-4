@@ -10,16 +10,12 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<"CUSTOMER" | "SELLER">("CUSTOMER");
+  const [image, setImage] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
 
     setLoading(true);
 
@@ -27,8 +23,11 @@ const Register = () => {
       email,
       password,
       name,
+      role,
+      image,
       callbackURL: "/",
     });
+    window.location.href = "/";
 
     setLoading(false);
 
@@ -41,7 +40,8 @@ const Register = () => {
     setName("");
     setEmail("");
     setPassword("");
-    setConfirmPassword("");
+    setRole("CUSTOMER");
+    setImage("");
   };
 
   return (
@@ -90,13 +90,20 @@ const Register = () => {
             required
           />
 
+          <select
+            className="select select-bordered w-[120%]"
+            value={role}
+            onChange={(e) => setRole(e.target.value as "CUSTOMER" | "SELLER")}
+          >
+            <option value="CUSTOMER">Register as Customer</option>
+            <option value="SELLER">Register as Seller</option>
+          </select>
+
           <input
-            type="password"
-            placeholder="Confirm Password"
+            type="text"
+            placeholder="Image URL"
             className="input input-bordered w-[120%]"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            onChange={(e) => setImage(e.target.value)}
           />
 
           <button

@@ -17,7 +17,6 @@ export const userService = {
       const session = await res.json();
 
     if (!session) {
-        toast.error("Session not found, Please Login Again");
       return {data: null, error: {message: "Session not found"}};
     }
 

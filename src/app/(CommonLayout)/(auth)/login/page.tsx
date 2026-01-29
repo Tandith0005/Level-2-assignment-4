@@ -6,6 +6,7 @@ import Image from "next/image";
 import { authClient } from "@/app/lib/auth-client";
 import { toast } from "react-toastify";
 import SocialSignIn from "@/components/layout/SocialSignIn";
+import { MessageCircleWarning } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +26,9 @@ const Login = () => {
 
     setLoading(false);
     if (res.error) {
-      toast.error(`${res.error.message}. If you don't have an account please Register` );
+      toast.error(
+        `${res.error.message}. If you don't have an account please Register`,
+      );
       return;
     }
 
@@ -97,6 +100,13 @@ const Login = () => {
             Register
           </Link>
         </p>
+        <div className="pt-5 text-yellow-500 flex gap-2">
+          <MessageCircleWarning />
+          <p className="text-sm">
+            Want to sell products? You must register as a <b>Seller</b> during
+            sign-up.
+          </p>
+        </div>
       </div>
     </div>
   );
