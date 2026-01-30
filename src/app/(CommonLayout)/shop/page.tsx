@@ -69,11 +69,9 @@ const Shop = async() => {
             key={product.id}
             className="card bg-base-100 shadow-md hover:shadow-xl transition duration-300"
           >
-            {/* Error: Failed to parse src "sfzfszdfzdf" on `next/image`, if using relative image it must start 
-            with a leading slash "/" or be an absolute URL (http:// or https://) */}
             <figure className="px-6 pt-6">
               <Image
-                src={'/doctor.jpg' }
+                src={product.image }
                 width={300}
                 height={300}
                 alt={product.name}

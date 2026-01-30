@@ -8,6 +8,11 @@ const nextConfig = {
         port: '',
         pathname: '/api/portraits/**',
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+        pathname: "/**",
+      },
     ],
   },
 }

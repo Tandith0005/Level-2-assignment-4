@@ -16,7 +16,7 @@ export default function SellerLayout({ sidebar, content }: SellerLayoutProps) {
       {/* Mobile header with toggle button */}
       <header className="bg-white shadow-sm md:hidden">
         <div className="flex items-center justify-between px-4 py-3">
-          <h1 className="text-lg font-bold text-blue-600">Seller Panel</h1>
+          <h1 className="text-lg font-bold text-blue-600">User Panel</h1>
           <button
             onClick={() => setIsSidebarOpen(true)}
             className="p-2 rounded-md hover:bg-gray-100"

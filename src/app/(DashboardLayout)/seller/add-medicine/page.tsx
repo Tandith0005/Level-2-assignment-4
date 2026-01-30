@@ -1,17 +1,19 @@
 "use client";
 
 import { categories, manufacturers } from "@/app/constants";
+import uploadToImgbb from "@/app/services/uploadImg.service";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 const AddMedicine = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     price: "",
     category: "",
     manufacturer: "",
-    image: "",
+    image: null as File | null,
   });
 
   const handleChange = (
@@ -24,16 +26,39 @@ const AddMedicine = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData({
+        ...formData,
+        image: e.target.files[0],
+      });
+    }
+  };
   // form submission login here----------------------------------------------------------------------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
-    const payload = {
-      ...formData,
-      price: Number(formData.price),
-    };
+    if (!formData.image) {
+      toast.error("Please select an image");
+      return;
+    }
 
     try {
+      //  upload image
+      const imageUrl = await uploadToImgbb(formData.image);
+
+      //  payload
+      const payload = {
+        name: formData.name,
+        description: formData.description,
+        price: Number(formData.price),
+        category: formData.category,
+        manufacturer: formData.manufacturer,
+        image: imageUrl,
+      };
+
+      //  send to backend
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/medicine`,
         {
@@ -46,21 +71,24 @@ const AddMedicine = () => {
         },
       );
 
-      if (response.ok) {
-        toast.success("Medicine added successfully");
-        setFormData({
-          name: "",
-          description: "",
-          price: "",
-          category: "",
-          manufacturer: "",
-          image: "",
-        });
-      }
+      if (!response.ok) throw new Error("Failed to save medicine");
+
+      toast.success("Medicine added successfully");
+
+      setFormData({
+        name: "",
+        description: "",
+        price: "",
+        category: "",
+        manufacturer: "",
+        image: null,
+      });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Something went wrong");
     }
+
+    setLoading(false);
   };
 
   return (
@@ -165,22 +193,24 @@ const AddMedicine = () => {
 
           {/* Image URL */}
           <div>
-            <label className="label">Image URL</label>
+            <label className="label">Medicine Image</label>
             <input
-              type="text"
-              name="image"
+              type="file"
+              accept="image/*"
               required
-              value={formData.image}
-              onChange={handleChange}
-              placeholder="https://image-link.com/medicine.png"
-              className="input input-bordered w-full"
+              onChange={handleImageChange}
+              className="file-input file-input-bordered w-full"
             />
           </div>
 
           {/* Submit */}
           <div className="pt-4">
-            <button type="submit" className="btn btn-primary w-full md:w-auto">
-              Add Medicine
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary w-full md:w-auto"
+            >
+              {loading ? "Uploading..." : "Add Medicine"}
             </button>
           </div>
         </form>

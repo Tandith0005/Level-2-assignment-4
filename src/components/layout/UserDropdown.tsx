@@ -52,11 +52,23 @@ export const UserDropdown = ({ user }: { user: User }) => {
             >
               Seller Dashboard
             </Link>
+            <Link
+              href="/seller/my-medicines"
+              className="block px-4 py-2 hover:bg-blue-500 rounded"
+            >
+              My Medicines
+            </Link>
           </li>
         )}
 
         {user.role === "CUSTOMER" && (
           <li>
+            <Link
+              href="/dashboard"
+              className="block px-4 py-2 hover:bg-blue-500 rounded"
+            >
+              Dashboard
+            </Link>
             <Link
               href="/dashboard/cart"
               className="block px-4 py-2 hover:bg-blue-500 rounded"
