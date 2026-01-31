@@ -64,13 +64,13 @@ export const UserDropdown = ({ user }: { user: User }) => {
         {user.role === "CUSTOMER" && (
           <li>
             <Link
-              href="/dashboard"
+              href="/user/dashboard"
               className="block px-4 py-2 hover:bg-blue-500 rounded"
             >
               Dashboard
             </Link>
             <Link
-              href="/dashboard/cart"
+              href="/user/cart"
               className="block px-4 py-2 hover:bg-blue-500 rounded"
             >
               Cart

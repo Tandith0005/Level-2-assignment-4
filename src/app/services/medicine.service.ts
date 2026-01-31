@@ -8,6 +8,16 @@ export const fetchMedicines = async () => {
     }
 };
 
+export const fetchSpecificMedicine = async (id: string) => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/${id}`, {cache: "no-store", credentials: "include"});
+        const medicine = await res.json();
+        return medicine;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const fetchMyMedicines = async () => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/my`, {cache: "no-store", credentials: "include"});

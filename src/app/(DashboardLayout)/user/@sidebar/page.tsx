@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, ShoppingCart, Package, Users, LogOut } from "lucide-react";
+import { Box, ShoppingCart, Package, Users, LogOut, UserRoundPen } from "lucide-react";
 
 const SellerSidebar = () => {
   return (
@@ -12,15 +12,19 @@ const SellerSidebar = () => {
       </div>
 
       <nav className="flex flex-col gap-2 p-4">
-        <Link href="/dashboard" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+        <Link href="/user/dashboard" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
           <Box /> Dashboard
         </Link>
 
-        <Link href="/dashboard/cart" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+        <Link href="/user/profile" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+          <UserRoundPen /> Profile
+        </Link>
+
+        <Link href="/user/cart" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
           <Package /> Cart
         </Link>
 
-        <Link href="/dashboard/orders" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+        <Link href="/user/orders" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
           <ShoppingCart /> My Orders
         </Link>
 

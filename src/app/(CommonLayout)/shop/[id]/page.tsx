@@ -1,10 +1,14 @@
+import { upsertCart } from "@/app/services/cart.service";
+import { fetchSpecificMedicine } from "@/app/services/medicine.service";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import ClientActions from "./ClientActions";
 
-const ShopSpecificItem = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
- // console.log(id); --------------------------------------------------------------------------------------- SERVER UNDEFINED ASHE ID TA CAUSE SERVER NAI EKHONO
+const ShopSpecificItem = async({ params }: { params: { id: string } }) => {
+  const { id } = await params;
+ const fetchMedicine = await fetchSpecificMedicine(id); 
+
 
   return (
     <div className="min-h-screen pt-28 pb-16 bg-gray-50">
@@ -25,7 +29,7 @@ const ShopSpecificItem = ({ params }: { params: { id: string } }) => {
           {/* Image */}
           <div className="flex justify-center items-center">
             <Image
-              src="/doctor.jpg"
+              src={fetchMedicine.image}
               alt="Medicine"
               width={420}
               height={420}
@@ -34,10 +38,10 @@ const ShopSpecificItem = ({ params }: { params: { id: string } }) => {
             />
           </div>
 
-          {/* Details */}
+          {/* Name */}
           <div>
             <h1 className="text-3xl font-bold mb-2">
-              Paracetamol 500mg
+             {fetchMedicine.name}
             </h1>
 
             <div className="flex items-center gap-3 mb-4">
@@ -47,34 +51,20 @@ const ShopSpecificItem = ({ params }: { params: { id: string } }) => {
               </span>
             </div>
 
+            {/* Description */}
             <p className="text-base-content/80 mb-6 leading-relaxed">
-              Paracetamol is used to relieve mild to moderate pain and reduce
-              fever. Suitable for adults and children when taken as directed.
+              {fetchMedicine.description}
             </p>
 
+            {/* Price */}
             <div className="text-3xl font-bold text-primary mb-6">
-              ৳120
+              ৳ {fetchMedicine.price}
             </div>
 
-            {/* Quantity */}
-            <div className="flex items-center gap-4 mb-6">
-              <span className="font-medium">Quantity:</span>
-              <div className="join">
-                <button className="btn join-item">−</button>
-                <button className="btn join-item btn-disabled">1</button>
-                <button className="btn join-item">+</button>
-              </div>
-            </div>
+
 
             {/* Actions */}
-            <div className="flex gap-4">
-              <button className="btn btn-primary">
-                Add to Cart
-              </button>
-              <button className="btn btn-outline btn-primary">
-                Buy Now
-              </button>
-            </div>
+            <ClientActions medicineId={id} />
 
             {/* Extra Info */}
             <div className="mt-8 space-y-2 text-sm text-base-content/70">

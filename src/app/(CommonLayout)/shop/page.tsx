@@ -1,13 +1,17 @@
-import { categories, manufacturers, Medicine, priceRanges } from "@/app/constants";
+import {
+  categories,
+  manufacturers,
+  Medicine,
+  priceRanges,
+} from "@/app/constants";
 import { fetchMedicines } from "@/app/services/medicine.service";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Shop = async() => {
+const Shop = async () => {
   const medicines = await fetchMedicines();
-
 
   return (
     <div className="min-h-screen pt-28 pb-12 bg-gray-50">
@@ -63,27 +67,31 @@ const Shop = async() => {
         lg:grid-cols-3
         xl:grid-cols-4"
       >
-        {medicines.map((product : Medicine) => (
- 
+        {medicines.map((product: Medicine) => (
           <div
             key={product.id}
             className="card bg-base-100 shadow-md hover:shadow-xl transition duration-300"
           >
             <figure className="px-6 pt-6">
-              <Image
-                src={product.image }
-                width={300}
-                height={300}
-                alt={product.name}
-                className="rounded-xl object-cover"
-              />
+              {product.image ? (
+                <Image
+                  src={product.image}
+                  width={300}
+                  height={300}
+                  alt={product.name || product.category || "Medicine"}
+                  className="rounded-xl object-cover"
+                /> 
+              ) : (
+                <div className="w-full aspect-[1/1] bg-base-200 rounded-xl flex items-center justify-center text-base-content/50">
+                  <span className="text-sm">No image</span>
+                </div>
+              )}
             </figure>
 
             {/* Stocks */}
             <div className="card-body">
               <h2 className="card-title flex justify-between items-start">
                 <span>{product.name}</span>
-                
               </h2>
 
               {/* Category & Manufacturer */}
@@ -109,7 +117,7 @@ const Shop = async() => {
                 </span>
 
                 <Link href={`/shop/${product.id}`}>
-                  <button className="btn btn-primary btn-sm">Buy Now</button>
+                  <button className="btn btn-primary btn-sm">View Now</button>
                 </Link>
               </div>
             </div>
