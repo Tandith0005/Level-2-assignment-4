@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { toast } from "react-toastify";
 
 export const userService = {
+  //  If you are looking for admin's get all user logic it's not here, go to admin/@content/all-users/page.tsx
   getSession: async function () {
     try {
       const cookieStore = await cookies();
