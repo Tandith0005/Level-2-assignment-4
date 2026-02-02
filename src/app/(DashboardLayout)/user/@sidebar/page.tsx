@@ -21,11 +21,11 @@ const SellerSidebar = () => {
         </Link>
 
         <Link href="/user/cart" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
-          <Package /> Cart
+          <ShoppingCart /> Cart
         </Link>
 
         <Link href="/user/orders" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
-          <ShoppingCart /> My Orders
+          <Package />My Orders
         </Link>
 
         <Link href="/" className="flex gap-2 p-2 hover:bg-gray-100 rounded">

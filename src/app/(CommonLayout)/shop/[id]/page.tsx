@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ClientActions from "./ClientActions";
+import { userService } from "@/app/services/user.service";
 
 const ShopSpecificItem = async({ params }: { params: { id: string } }) => {
   const { id } = await params;
  const fetchMedicine = await fetchSpecificMedicine(id); 
+ const getUser =await  userService.getSession();
 
 
   return (
@@ -34,6 +36,7 @@ const ShopSpecificItem = async({ params }: { params: { id: string } }) => {
               width={420}
               height={420}
               className="rounded-xl object-cover"
+              style={{ width: "100%", height: "auto" }}
               priority
             />
           </div>
@@ -64,7 +67,7 @@ const ShopSpecificItem = async({ params }: { params: { id: string } }) => {
 
 
             {/* Actions */}
-            <ClientActions medicineId={id} />
+            <ClientActions medicineId={id} getUser={getUser} />
 
             {/* Extra Info */}
             <div className="mt-8 space-y-2 text-sm text-base-content/70">

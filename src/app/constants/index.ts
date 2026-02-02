@@ -113,3 +113,14 @@ export const priceRanges = [
   { label: "৳100 - ৳300", min: 100, max: 300 },
   { label: "Above ৳300", min: 300, max: Infinity },
 ];
+
+export interface SessionResult {
+  data: {
+    user: {
+      id: string;
+      role: "ADMIN" | "SELLER" | "CUSTOMER";
+      email?: string;
+    };
+  } | null;
+  error: unknown | null;
+}

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 interface CartItem {
   id: string;
@@ -17,6 +18,11 @@ interface CartItem {
 const Checkout = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
 
   useEffect(() => {
     const loadCart = async () => {
@@ -51,12 +57,44 @@ const Checkout = () => {
     );
   }
 
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ name, phone, address, city, postalCode }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Order failed");
+    }
+
+    toast.success(" Order placed successfully!");
+
+    setCartItems([]);
+    setName("");
+    setPhone("");
+    setAddress("");
+    setCity("");
+    setPostalCode("");
+
+  } catch (error) {
+    toast.error(" Failed to place order");
+    console.error(error);
+  }
+};
+
+
   return (
     <div className="min-h-screen bg-gray-50 py-10">
       <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* LEFT: Shipping + Payment */}
-        <div className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm">
+        <form onSubmit={handleSubmit} className="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm">
           <h1 className="text-2xl font-bold text-blue-600 mb-6">
             Checkout
           </h1>
@@ -66,11 +104,11 @@ const Checkout = () => {
             <h2 className="text-lg font-semibold">Shipping Information</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input className="input input-bordered w-full" placeholder="Full Name" />
-              <input className="input input-bordered w-full" placeholder="Phone Number" />
-              <input className="input input-bordered w-full md:col-span-2" placeholder="Street Address" />
-              <input className="input input-bordered w-full" placeholder="City" />
-              <input className="input input-bordered w-full" placeholder="Postal Code" />
+              <input onChange={(e) => setName(e.target.value)} type="text" className="input input-bordered w-full" placeholder="Full Name" />
+              <input onChange={(e) => setPhone(e.target.value)} type="number" className="input input-bordered w-full" placeholder="Phone Number" />
+              <input onChange={(e) => setAddress(e.target.value)} type="text" className="input input-bordered w-full md:col-span-2" placeholder="Street Address" />
+              <input onChange={(e) => setCity(e.target.value)} type="text" className="input input-bordered w-full" placeholder="City" />
+              <input onChange={(e) => setPostalCode(e.target.value)} type="number" className="input input-bordered w-full" placeholder="Postal Code" />
             </div>
           </div>
 
@@ -92,7 +130,7 @@ const Checkout = () => {
           <button className="btn btn-primary btn-lg w-full mt-8">
             Place Order
           </button>
-        </div>
+        </form>
 
         {/* RIGHT: Order Summary */}
         <div className="bg-white rounded-xl p-6 shadow-sm sticky top-8">

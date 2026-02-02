@@ -3,16 +3,27 @@
 import { upsertCart } from "@/app/services/cart.service";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { SessionResult } from "@/app/constants";
 
 interface Props {
   medicineId: string;
+  getUser: SessionResult;
 }
 
-export default function ClientActions({ medicineId }: Props) {
+export default function ClientActions({ medicineId, getUser }: Props) {
   const router = useRouter();
 
   const handleAddToCart = async () => {
     try {
+      if (!getUser?.data?.user) {
+        return toast.error("Please login first");
+      }
+
+      const role = getUser.data.user.role;
+
+      if (role === "SELLER" || role === "ADMIN") {
+        return toast.error("You are not a customer, you can't add to cart!");
+      }
       await upsertCart(medicineId);
       toast.success("Added to cart!");
     } catch (error) {
@@ -23,6 +34,15 @@ export default function ClientActions({ medicineId }: Props) {
 
   const handleBuyNow = async () => {
     try {
+      if (!getUser?.data?.user) {
+        return toast.error("Please login first");
+      }
+
+      const role = getUser.data.user.role;
+
+      if (role === "SELLER" || role === "ADMIN") {
+        return toast.error("You are not a customer, you can't Buy!");
+      }
       await upsertCart(medicineId);
       toast.success("Added to cart! Redirecting...");
       setTimeout(() => {
