@@ -46,7 +46,8 @@ const SellerDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg text-primary"></span>
+        <span className="loading loading-spinner loading-lg text-primary bg-blue-400"></span>
+        Loading....
       </div>
     );
   }

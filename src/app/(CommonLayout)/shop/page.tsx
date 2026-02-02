@@ -11,7 +11,7 @@ const Shop = async ({
 }) => {
   const params = await searchParams;
 
-  console.log(params);
+
 
   const medicines = await fetchFilteredMedicines(params);
 

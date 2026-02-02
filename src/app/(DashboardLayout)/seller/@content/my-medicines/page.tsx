@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import { fetchMyMedicines, deleteMedicine } from "@/app/services/medicine.service"; // your service functions
 import { toast } from "react-toastify";
@@ -19,7 +18,6 @@ type Medicine = {
 const MyMedicines = () => {
   const [medicines, setMedicines] = useState<Medicine[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log(medicines);
 
   useEffect(() => {
     const loadMedicines = async () => {
