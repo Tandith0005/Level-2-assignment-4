@@ -32,7 +32,7 @@ const IncomingOrders = () => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/seller`,
-        { credentials: "include" }
+        { credentials: "include" },
       );
       const data = await res.json();
       setOrders(data);
@@ -44,8 +44,15 @@ const IncomingOrders = () => {
     }
   };
 
-  const handleStatusChange = async (orderId: string, status: string) => {
+  const handleStatusChange = async (
+    orderId: string,
+    status: "PENDING" | "COMPLETED" | "CANCELLED",
+  ) => {
     try {
+      setOrders((prev) =>
+        prev.map((o) => (o.id === orderId ? { ...o, status } : o)),
+      );
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/status`,
         {
@@ -53,12 +60,17 @@ const IncomingOrders = () => {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({ orderId, status }),
-        }
+        },
       );
+
+      if (!res.ok) throw new Error("Failed to update status");
+
       const updated = await res.json();
+
       setOrders((prev) =>
-        prev.map((o) => (o.id === updated.id ? updated : o))
+        prev.map((o) => (o.id === updated.id ? { ...o, ...updated } : o)),
       );
+
       toast.success("Order status updated");
     } catch (err) {
       console.error(err);
@@ -112,12 +124,15 @@ const IncomingOrders = () => {
                 className="select select-bordered select-sm"
                 value={order.status}
                 onChange={(e) =>
-                  handleStatusChange(order.id, e.target.value)
+                  handleStatusChange(
+                    order.id,
+                    e.target.value as "PENDING" | "COMPLETED" | "CANCELLED",
+                  )
                 }
               >
-                <option value="Pending">Pending</option>
-                <option value="Processing">Processing</option>
-                <option value="Delivered">Delivered</option>
+                <option value="PENDING">Pending</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="CANCELLED">Cancelled</option>
               </select>
             </div>
 
