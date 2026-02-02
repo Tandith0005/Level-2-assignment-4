@@ -6,7 +6,7 @@ interface NavLinks {
 export const NavLinks: NavLinks[] = [
   { label: "Home", href: "/" },
     { label: "Shop", href: "/shop" },
-    { label: "Categories", href: "/categories" },
+    { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
 ];
 
@@ -95,7 +95,6 @@ export const QuickLinks: QuickLinks[] = [
 
 
 export const categories = [
-  "All Medicines",
   "Pain Relief",
   "Antibiotics",
   "Vitamins",
@@ -103,7 +102,6 @@ export const categories = [
   "Others"
 ];
 export const manufacturers = [
-  "All Manufacturers",
   "Square",
   "Beximco",
   "Incepta",
@@ -111,7 +109,6 @@ export const manufacturers = [
   "Others"
 ];
 export const priceRanges = [
-  { label: "All Prices", min: 0, max: Infinity },
   { label: "Below ৳100", min: 0, max: 100 },
   { label: "৳100 - ৳300", min: 100, max: 300 },
   { label: "Above ৳300", min: 300, max: Infinity },

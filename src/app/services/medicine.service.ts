@@ -35,3 +35,35 @@ export const deleteMedicine = async (id: string) => {
         console.log(error);
     }
 };
+
+// filter medicine ------------------
+type FilterParams = {
+  search?: string;
+  category?: string;
+  manufacturer?: string;
+  minPrice?: string;
+  maxPrice?: string;
+};
+
+export const fetchFilteredMedicines = async (params?: FilterParams) => {
+  const query = params
+    ? "?" +
+      new URLSearchParams(
+        Object.entries(params).filter(
+          ([_, v]) => v !== undefined && v !== ""
+        ) as [string, string][]
+      ).toString()
+    : "";
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/medicine${query}`,
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch medicines");
+  }
+
+  return res.json();
+};
+

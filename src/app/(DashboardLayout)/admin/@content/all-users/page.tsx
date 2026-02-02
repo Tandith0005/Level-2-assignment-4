@@ -2,8 +2,15 @@
 
 import { useEffect, useState } from "react";
 
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    status: string;
+}
 const AdminUsersPage = () => {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
   
@@ -13,7 +20,7 @@ const AdminUsersPage = () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/user`,
       {
-        credentials: "include", // IMPORTANT (admin auth)
+        credentials: "include", 
       }
     );
     const data = await res.json();
@@ -24,22 +31,23 @@ const AdminUsersPage = () => {
   }, []);
 
   const toggleBan = async (userId: string, status: string) => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/users/${userId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          status: status === "ACTIVE" ? "BANNED" : "ACTIVE",
-        }),
-      }
-    );
+  const newStatus = status === "active" ? "banned" : "active";
 
-   
-  };
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/ban/${userId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ status: newStatus }),
+  });
+
+  
+  setUsers((prev) =>
+    prev.map((user) =>
+      user.id === userId ? { ...user, status: newStatus } : user
+    )
+  );
+};
+
 
   if (loading) return <p>Loading users...</p>;
 
@@ -69,23 +77,23 @@ const AdminUsersPage = () => {
                 <td>{user.role}</td>
                 <td
                   className={
-                    user.status === "ACTIVE"
+                    user.status === "active"
                       ? "text-green-600"
                       : "text-red-600"
                   }
                 >
                   {user.status}
                 </td>
-                <td className="text-center">
+                <td className="text-center ">
                   <button
                     onClick={() => toggleBan(user.id, user.status)}
-                    className={`px-3 py-1 rounded text-white ${
-                      user.status === "ACTIVE"
-                        ? "bg-red-500"
-                        : "bg-green-500"
+                    className={`px-3 py-1 rounded cursor-pointer ${
+                      user.status === "active"
+                        ? "text-red-500"
+                        : "bg-green-500 text-white"
                     }`}
                   >
-                    {user.status === "ACTIVE" ? "Ban" : "Unban"}
+                    {user.status === "active" ? "Ban" : "Unban"}
                   </button>
                 </td>
               </tr>

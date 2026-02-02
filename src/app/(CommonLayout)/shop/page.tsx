@@ -1,17 +1,19 @@
-import {
-  categories,
-  manufacturers,
-  Medicine,
-  priceRanges,
-} from "@/app/constants";
-import { fetchMedicines } from "@/app/services/medicine.service";
-import { Search } from "lucide-react";
+import { Medicine } from "@/app/constants";
+import { fetchFilteredMedicines } from "@/app/services/medicine.service";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import ShopFilters from "./ShopFilters";
 
-const Shop = async () => {
-  const medicines = await fetchMedicines();
+const Shop = async ({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) => {
+  const params = await searchParams;
+
+  console.log(params);
+
+  const medicines = await fetchFilteredMedicines(params);
 
   return (
     <div className="min-h-screen pt-28 pb-12 bg-gray-50">
@@ -19,43 +21,8 @@ const Shop = async () => {
         <h1 className="text-4xl font-bold text-center text-blue-600">
           Shop Medicines
         </h1>
-        <p className="text-center text-base-content/70 mt-2">
-          Browse trusted medicines and healthcare products
-        </p>
 
-        {/* FILTER BAR etar vitor shob filter ase ----------------------------------------------------*/}
-        <div className="grid gap-4 md:grid-cols-4 bg-white p-4 rounded-xl shadow">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search medicine..."
-              className="input input-bordered w-full pl-10"
-            />
-          </div>
-
-          {/* Category */}
-          <select className="select select-bordered w-full">
-            {categories.map((cat) => (
-              <option key={cat}>{cat}</option>
-            ))}
-          </select>
-
-          {/* Manufacturer */}
-          <select className="select select-bordered w-full">
-            {manufacturers.map((mfg) => (
-              <option key={mfg}>{mfg}</option>
-            ))}
-          </select>
-
-          {/* Price */}
-          <select className="select select-bordered w-full">
-            {priceRanges.map((price) => (
-              <option key={price.label}>{price.label}</option>
-            ))}
-          </select>
-        </div>
+        <ShopFilters />
       </div>
       {/* FILTER BAR sesh  --------------------------------------------------------------------------------------*/}
 
@@ -78,9 +45,10 @@ const Shop = async () => {
                   src={product.image}
                   width={300}
                   height={300}
-                  alt={product.name || product.category || "Medicine"}
+                  alt={product.name}
                   className="rounded-xl object-cover"
-                /> 
+                  style={{ width: "100%", height: "auto" }}
+                />
               ) : (
                 <div className="w-full aspect-[1/1] bg-base-200 rounded-xl flex items-center justify-center text-base-content/50">
                   <span className="text-sm">No image</span>
