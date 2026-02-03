@@ -15,6 +15,14 @@ const nextConfig = {
       },
     ],
   },
+  async rewrite() {
+    return [
+      {
+        source: '/auth/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_URL}/auth/:path*`,
+      },
+    ]
+  }
 }
 
 module.exports = nextConfig
