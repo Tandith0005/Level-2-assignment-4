@@ -23,7 +23,6 @@ const Register = () => {
       email,
       password,
       name,
-      role,
       image,
       callbackURL: "/",
     });
@@ -35,6 +34,15 @@ const Register = () => {
       toast.error(res.error.message);
       return;
     }
+
+    await fetch("/api/user/role", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      role, // CUSTOMER or SELLER
+    }),
+  });
 
     toast.success("Account created successfully");
     setName("");

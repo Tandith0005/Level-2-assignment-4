@@ -6,6 +6,6 @@ import Questions from "@/components/layout/Questions";
 import Reviews from "@/components/layout/Reviews";
 import { redirect } from "next/navigation";
 
- function Home() {
+export default function Home() {
   redirect('/')
 }
