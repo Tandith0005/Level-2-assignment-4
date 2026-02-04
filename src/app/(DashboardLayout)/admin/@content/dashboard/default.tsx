@@ -1,6 +1,6 @@
 import AdminDashboard from "./page";
 
 
-export default function SidebarDefault() {
+export default function AdminDashboardDefault() {
   return <AdminDashboard />;
 }

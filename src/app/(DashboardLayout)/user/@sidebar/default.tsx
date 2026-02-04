@@ -1,5 +1,5 @@
 import Sidebar from "./page";
 
-export default function SidebarDefault() {
+export default function UserSidebarDefault() {
   return <Sidebar />;
 }

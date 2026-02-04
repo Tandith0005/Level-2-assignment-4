@@ -1,6 +1,6 @@
 import UserDashboard from "./page";
 
 
-export default function SidebarDefault() {
+export default function UserDashboardDefault() {
   return <UserDashboard />
 }
