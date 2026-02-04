@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Box, ShoppingCart, Package } from "lucide-react";
+import { ShoppingCart, Package } from "lucide-react";
 import { fetchMedicines } from "@/app/services/medicine.service";
 import { fetchSellerOrders } from "@/app/services/orders.service";
 

@@ -2,6 +2,6 @@ import SellerDashboard from "./dashboard/page";
 
 
 
-export default function SidebarDefault() {
+export default function SellerDefault() {
   return <SellerDashboard />;
 }

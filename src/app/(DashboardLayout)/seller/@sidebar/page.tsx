@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Box, ShoppingCart, Package, Users, LogOut } from "lucide-react";
+import { Box, ShoppingCart, Package, LogOut } from "lucide-react";
 
 const SellerSidebar = () => {
   return (
