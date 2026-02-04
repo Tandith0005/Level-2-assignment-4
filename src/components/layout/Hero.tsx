@@ -38,7 +38,7 @@ const Hero = () => {
               
             </button>
             </Link>
-            <Link href="/dashboard">
+            <Link href="/user-dashboard">
               <button className="btn btn-outline btn-lg px-8 py-4 text-lg text-white border-white/30 hover:bg-white/10 hover:border-white/50 transition-all duration-300">
               Dashboard
             </button>
