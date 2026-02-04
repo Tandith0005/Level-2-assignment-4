@@ -19,13 +19,16 @@ const Register = () => {
 
     setLoading(true);
 
-    const res = await authClient.signUp.email({
+    const signupData = {
       email,
       password,
       name,
+      role,
       image,
       callbackURL: "/",
-    });
+    } as Parameters<typeof authClient.signUp.email>[0] & { role: "CUSTOMER" | "SELLER" };
+
+    const res = await authClient.signUp.email(signupData);
     window.location.href = "/";
 
     setLoading(false);
@@ -35,14 +38,6 @@ const Register = () => {
       return;
     }
 
-    await fetch("/api/user/role", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email,
-      role, // CUSTOMER or SELLER
-    }),
-  });
 
     toast.success("Account created successfully");
     setName("");
