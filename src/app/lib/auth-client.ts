@@ -1,3 +1,4 @@
+import { inferAdditionalFields } from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react"
 // export const authClient = createAuthClient({
 //     baseURL: `${process.env.NEXT_PUBLIC_API_URL}`
@@ -10,9 +11,20 @@ import { createAuthClient } from "better-auth/react"
 //   },
 // });
 
+// export const authClient = createAuthClient({
+//   baseURL: process.env.NEXT_PUBLIC_AUTH_URL!,
+//   fetchOptions: {
+//     credentials: "include",
+//   },
+// });
+
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_AUTH_URL!,
-  fetchOptions: {
-    credentials: "include",
-  },
+  // Point this to your FRONTEND URL (the one with the rewrite)
+  // In production, this should be your Vercel URL
+  baseURL: "https://level-2-assignment-4-blue.vercel.app",
+  plugins: [
+    inferAdditionalFields({
+      user: { role: { type: "string" } },
+    }),
+  ],
 });

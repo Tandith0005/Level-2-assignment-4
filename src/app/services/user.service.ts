@@ -1,17 +1,16 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { toast } from "react-toastify";
 
 export const userService = {
   //  If you are looking for admin's get all user logic it's not here, go to admin/@content/all-users/page.tsx
   getSession: async function () {
     try {
-      const cookieStore = await cookies();
+      // const cookieStore = await cookies();
+      const reqHeaders = await headers();
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_AUTH_URL}/get-session`,
         {
-          headers: {
-            cookie: cookieStore.toString(),
-          },
+          headers: reqHeaders,
           cache: "no-store",
         },
       );

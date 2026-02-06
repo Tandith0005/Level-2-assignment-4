@@ -18,8 +18,8 @@ const nextConfig = {
   async rewrite() {
     return [
       {
-        source: '/auth/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/auth/:path*`,
+        source: '/api/:path*',
+        destination: `https://medi-store-server-tau.vercel.app/api/:path*`,
       },
     ]
   }
