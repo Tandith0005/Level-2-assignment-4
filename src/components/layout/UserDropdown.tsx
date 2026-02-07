@@ -1,7 +1,6 @@
 "use client"; 
 
 import { User } from "@/app/constants";
-import { authFetch } from "@/app/lib/authFetch";
 import { CircleUserRound } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,16 +10,13 @@ export const UserDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
   const handleLogout = async () => {
     try {
-      const response = await authFetch(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_AUTH_URL}/sign-out`,
         {
           method: "POST",
-        
+          credentials: "include",
         },
       );
-      
-      // clear local storage
-      localStorage.removeItem("auth_token");
 
       toast.success("Logged out successfully");
 

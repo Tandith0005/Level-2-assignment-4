@@ -1,6 +1,5 @@
 "use client";
 
-import { authFetch } from "@/app/lib/authFetch";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -15,9 +14,9 @@ const AdminCategoriesPage = () => {
 
   const loadCategories = async () => {
     try {
-      const res = await authFetch(
+      const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/categories`,
-  
+        { credentials: "include" }
       );
 
       if (!res.ok) throw new Error();
@@ -33,11 +32,12 @@ const AdminCategoriesPage = () => {
   const addCategory = async () => {
     if (!name.trim()) return;
 
-    const res = await authFetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/categories`,
       {
         method: "POST",
- 
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ name }),
       }
     );

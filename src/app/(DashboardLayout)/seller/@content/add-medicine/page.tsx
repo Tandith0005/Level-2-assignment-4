@@ -1,7 +1,6 @@
 "use client";
 
 import { categories, manufacturers } from "@/app/constants";
-import { authFetch } from "@/app/lib/authFetch";
 import uploadToImgbb from "@/app/services/uploadImg.service";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -60,13 +59,15 @@ const AddMedicine = () => {
       };
 
       //  send to backend
-      const response = await authFetch(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/medicine`,
         {
           method: "POST",
- 
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(payload),
-      
+          credentials: "include",
         },
       );
 

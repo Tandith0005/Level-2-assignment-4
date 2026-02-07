@@ -21,14 +21,10 @@ const Login = () => {
     const res = await authClient.signIn.email({
       email,
       password,
+      callbackURL: "/",
     });
 
     setLoading(false);
-
-    if (res.data?.token) {
-      localStorage.setItem("auth_token", res.data.token);
-    }
-
     if (res.error) {
       toast.error(
         `${res.error.message}. If you don't have an account please Register`,

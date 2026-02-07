@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { authFetch } from "@/app/lib/authFetch";
 
 const ProfileActions = ({ user }: any) => {
   const router = useRouter();
@@ -16,12 +15,12 @@ const ProfileActions = ({ user }: any) => {
     try {
       setLoading(true);
 
-      const res = await authFetch(
+      const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/user/me`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
- 
+          credentials: "include",
           body: JSON.stringify({ name}),
         }
       );
@@ -45,11 +44,11 @@ const ProfileActions = ({ user }: any) => {
     if (!confirmed) return;
 
     try {
-      await authFetch(
+      await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/user/me`,
         {
           method: "DELETE",
-    
+          credentials: "include",
         }
       );
 

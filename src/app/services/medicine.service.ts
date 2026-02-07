@@ -1,8 +1,6 @@
-import { authFetch } from "../lib/authFetch";
-
 export const fetchMedicines = async () => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine`, {cache: "no-store"});
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine`, {cache: "no-store"});
         const medicines = await res.json();
         return medicines;
     } catch (error) {
@@ -12,7 +10,7 @@ export const fetchMedicines = async () => {
 
 export const fetchSpecificMedicine = async (id: string) => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/${id}`, {cache: "no-store"});
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/${id}`, {cache: "no-store", credentials: "include"});
         const medicine = await res.json();
         return medicine;
     } catch (error) {
@@ -22,7 +20,7 @@ export const fetchSpecificMedicine = async (id: string) => {
 
 export const fetchMyMedicines = async () => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/my`, {cache: "no-store"});
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/my`, {cache: "no-store", credentials: "include"});
         const medicines = await res.json();
         return medicines;
     } catch (error) {
@@ -32,7 +30,7 @@ export const fetchMyMedicines = async () => {
 
 export const deleteMedicine = async (id: string) => {
     try {
-        await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/${id}`, {method: "DELETE"});
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medicine/${id}`, {method: "DELETE", credentials: "include"});
     } catch (error) {
         console.log(error);
     }

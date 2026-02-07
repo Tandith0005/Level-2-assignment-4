@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Trash2, Plus, Minus, ArrowRight, ShoppingCart } from "lucide-react";
 import { deleteItemsInCart, minusCart, upsertCart } from "@/app/services/cart.service";
-import { authFetch } from "@/app/lib/authFetch";
 
 interface CartItem {
   id: string;
@@ -31,9 +30,9 @@ const CartPage = () => {
   useEffect(() => {
     const loadCart = async () => {
       try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
           cache: "no-store",
-
+          credentials: "include",
         });
 
         if (!res.ok) {

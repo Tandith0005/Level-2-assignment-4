@@ -19,7 +19,7 @@ const AdminOrdersPage = () => {
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/admin`, {
-  
+      credentials: "include",
     })
       .then(res => res.json())
       .then(setOrders)
