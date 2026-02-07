@@ -18,22 +18,9 @@ import { createAuthClient } from "better-auth/react"
 //   },
 // });
 
-// export const authClient = createAuthClient({
-//   // Point this to your FRONTEND URL (the one with the rewrite)
-//   // In production, this should be your Vercel URL
-//   baseURL: "https://medi-store-server-tau.vercel.app/api/auth",
-//   plugins: [
-//     inferAdditionalFields({
-//       user: { role: { type: "string" } },
-//     }),
-//   ],
-// });
-
 export const authClient = createAuthClient({
+ /** The base URL of the server (optional if you're using the same domain) */
   baseURL: "https://medi-store-server-tau.vercel.app/api/auth",
-  fetchOptions: {
-    credentials: "include",
-  },
   plugins: [
     inferAdditionalFields({
       user: { role: { type: "string" } },
