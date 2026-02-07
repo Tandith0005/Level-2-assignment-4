@@ -61,7 +61,7 @@ export const userService = {
           cookie: cookieStore.toString(),
         },
         cache: "no-store",
-        credentials: "include"
+   
       });
     } catch (error) {
       console.log(error);

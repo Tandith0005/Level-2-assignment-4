@@ -17,7 +17,7 @@ const AdminCategoriesPage = () => {
     try {
       const res = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/categories`,
-        { credentials: "include" }
+  
       );
 
       if (!res.ok) throw new Error();
@@ -37,8 +37,7 @@ const AdminCategoriesPage = () => {
       `${process.env.NEXT_PUBLIC_API_URL}/categories`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+ 
         body: JSON.stringify({ name }),
       }
     );

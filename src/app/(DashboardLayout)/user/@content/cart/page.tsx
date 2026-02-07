@@ -33,7 +33,7 @@ const CartPage = () => {
       try {
         const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
           cache: "no-store",
-          credentials: "include",
+
         });
 
         if (!res.ok) {

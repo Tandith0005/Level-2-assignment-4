@@ -33,7 +33,7 @@ const IncomingOrders = () => {
     try {
       const res = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/seller`,
-        { credentials: "include" },
+  
       );
       const data = await res.json();
       setOrders(data);
@@ -58,8 +58,7 @@ const IncomingOrders = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/orders/status`,
         {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
+
           body: JSON.stringify({ orderId, status }),
         },
       );

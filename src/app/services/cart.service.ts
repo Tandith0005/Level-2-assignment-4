@@ -3,7 +3,7 @@ import { authFetch } from '../lib/authFetch';
 
 export const fetchCart = async () => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {cache: "no-store", credentials: "include"});
+        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {cache: "no-store"});
         const cart = await res.json();
         return cart;
     } catch (error) {
@@ -14,7 +14,7 @@ export const fetchCart = async () => {
 
 export const upsertCart = async (id: string) => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {method: "PATCH", credentials: "include"});
+        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {method: "PATCH"});
         const cart = await res.json();
         return cart;
     } catch (error) {
@@ -23,7 +23,7 @@ export const upsertCart = async (id: string) => {
 };
 export const minusCart = async (id: string) => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/minus/${id}`, {method: "PATCH", credentials: "include"});
+        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/minus/${id}`, {method: "PATCH"});
         const cart = await res.json();
         return cart;
     } catch (error) {
@@ -33,7 +33,7 @@ export const minusCart = async (id: string) => {
 
 export const deleteItemsInCart = async (id: string) => {
     try {
-        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {method: "DELETE", credentials: "include"});
+        const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/${id}`, {method: "DELETE"});
         const cart = await res.json();
         return cart;
     } catch (error) {

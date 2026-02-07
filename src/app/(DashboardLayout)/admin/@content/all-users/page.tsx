@@ -33,8 +33,7 @@ const AdminUsersPage = () => {
 
   await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/user/ban/${userId}`, {
     method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
+
     body: JSON.stringify({ status: newStatus }),
   });
 

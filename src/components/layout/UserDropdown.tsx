@@ -15,7 +15,7 @@ export const UserDropdown = ({ user }: { user: User }) => {
         `${process.env.NEXT_PUBLIC_AUTH_URL}/sign-out`,
         {
           method: "POST",
-          credentials: "include",
+        
         },
       );
       

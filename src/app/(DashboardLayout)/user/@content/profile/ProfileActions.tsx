@@ -21,7 +21,7 @@ const ProfileActions = ({ user }: any) => {
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
+ 
           body: JSON.stringify({ name}),
         }
       );
@@ -49,7 +49,7 @@ const ProfileActions = ({ user }: any) => {
         `${process.env.NEXT_PUBLIC_API_URL}/user/me`,
         {
           method: "DELETE",
-          credentials: "include",
+    
         }
       );
 

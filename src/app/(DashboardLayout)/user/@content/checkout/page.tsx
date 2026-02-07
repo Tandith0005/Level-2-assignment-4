@@ -30,7 +30,7 @@ const Checkout = () => {
       const res = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/cart`,
         {
-          credentials: "include",
+   
           cache: "no-store",
         }
       );
@@ -66,7 +66,7 @@ const Checkout = () => {
     const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
+
       body: JSON.stringify({ name, phone, address, city, postalCode }),
     });
 
