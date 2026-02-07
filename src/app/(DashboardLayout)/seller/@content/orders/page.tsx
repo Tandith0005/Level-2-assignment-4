@@ -1,5 +1,6 @@
 "use client";
 
+import { authFetch } from "@/app/lib/authFetch";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -30,7 +31,7 @@ const IncomingOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch(
+      const res = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/seller`,
         { credentials: "include" },
       );
@@ -53,7 +54,7 @@ const IncomingOrders = () => {
         prev.map((o) => (o.id === orderId ? { ...o, status } : o)),
       );
 
-      const res = await fetch(
+      const res = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/orders/status`,
         {
           method: "PATCH",

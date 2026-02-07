@@ -1,3 +1,4 @@
+import { authFetch } from "../lib/authFetch";
 
 
 export interface DashboardStats {
@@ -8,7 +9,7 @@ export interface DashboardStats {
 }
 
 export const fetchDashboardStats = async (): Promise<DashboardStats> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adminDashboard-stats`, {
+  const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/adminDashboard-stats`, {
     credentials: "include",
     cache: "no-store", 
   });

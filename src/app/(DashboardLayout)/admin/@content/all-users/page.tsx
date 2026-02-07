@@ -1,5 +1,6 @@
 "use client";
 
+import { authFetch } from "@/app/lib/authFetch";
 import { useEffect, useState } from "react";
 
 interface User {
@@ -17,11 +18,8 @@ const AdminUsersPage = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/user`,
-      {
-        credentials: "include", 
-      }
+    const res = await authFetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/user`
     );
     const data = await res.json();
     setUsers(data);
@@ -33,7 +31,7 @@ const AdminUsersPage = () => {
   const toggleBan = async (userId: string, status: string) => {
   const newStatus = status === "active" ? "banned" : "active";
 
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/ban/${userId}`, {
+  await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/user/ban/${userId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

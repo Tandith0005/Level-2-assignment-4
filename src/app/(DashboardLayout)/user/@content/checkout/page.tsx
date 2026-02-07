@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { authFetch } from "@/app/lib/authFetch";
 
 interface CartItem {
   id: string;
@@ -26,7 +27,7 @@ const Checkout = () => {
 
   useEffect(() => {
     const loadCart = async () => {
-      const res = await fetch(
+      const res = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/cart`,
         {
           credentials: "include",
@@ -62,7 +63,7 @@ const Checkout = () => {
   e.preventDefault();
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
+    const res = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
