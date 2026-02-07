@@ -26,10 +26,14 @@ const Register = () => {
       role,
       image,
       callbackURL: "/",
-    } as Parameters<typeof authClient.signUp.email>[0] & { role: "CUSTOMER" | "SELLER" };
+    } as Parameters<typeof authClient.signUp.email>[0] & {
+      role: "CUSTOMER" | "SELLER";
+    };
 
-    const res = await authClient.signUp.email(signupData);
-    window.location.href = "/";
+    const res = await authClient.signUp.email({
+      ...signupData,
+      callbackURL: "/",
+    });
 
     setLoading(false);
 
@@ -37,7 +41,6 @@ const Register = () => {
       toast.error(res.error.message);
       return;
     }
-
 
     toast.success("Account created successfully");
     setName("");
