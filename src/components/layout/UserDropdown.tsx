@@ -17,6 +17,9 @@ export const UserDropdown = ({ user }: { user: User }) => {
           credentials: "include",
         },
       );
+      
+      // clear local storage
+      localStorage.removeItem("auth_token");
 
       toast.success("Logged out successfully");
 

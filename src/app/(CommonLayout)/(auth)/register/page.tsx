@@ -25,15 +25,17 @@ const Register = () => {
       name,
       role,
       image,
-      callbackURL: "/",
     } as Parameters<typeof authClient.signUp.email>[0] & {
       role: "CUSTOMER" | "SELLER";
     };
 
     const res = await authClient.signUp.email({
       ...signupData,
-      callbackURL: "/",
     });
+
+    if (res.data?.token) {
+      localStorage.setItem("auth_token", res.data.token);
+    }
 
     setLoading(false);
 
